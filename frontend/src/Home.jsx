@@ -8,11 +8,22 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [loginType, setLoginType] = useState(""); // "approver" or "requester"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarVariant, setSnackbarVariant] = useState("success"); // "success" or "error"
+
+  const navigate = useNavigate();
 
   const handleClickOpen = (type) => {
     setLoginType(type);
@@ -22,6 +33,34 @@ const Home = () => {
   const handleClose = () => {
     setOpen(false);
     setLoginType("");
+  };
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("https://srm-agri.onrender.com/login", {
+        email,
+        password,
+      });
+
+      if (response.data.success) {
+        setSnackbarMessage("Login successful!");
+        setSnackbarVariant("success");
+        if (loginType === "approver") {
+          navigate("/admin");
+        } else {
+          navigate("/requester");
+        }
+      } else {
+        setSnackbarMessage("Login failed. Please try again.");
+        setSnackbarVariant("error");
+      }
+    } catch (error) {
+      setSnackbarMessage("An error occurred. Please try again.");
+      setSnackbarVariant("error");
+    } finally {
+      setSnackbarOpen(true);
+      handleClose();
+    }
   };
 
   return (
@@ -123,6 +162,8 @@ const Home = () => {
               fullWidth
               variant="outlined"
               sx={{ borderRadius: "12px" }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="dense"
@@ -131,6 +172,8 @@ const Home = () => {
               fullWidth
               variant="outlined"
               sx={{ borderRadius: "12px" }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Box>
         </DialogContent>
@@ -149,7 +192,7 @@ const Home = () => {
             Cancel
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={handleLogin}
             color="primary"
             sx={{ borderRadius: "12px", fontWeight: "bold" }}
           >
@@ -157,6 +200,20 @@ const Home = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarVariant}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
