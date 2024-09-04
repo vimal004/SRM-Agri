@@ -1,0 +1,32 @@
+import React from "react";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import Header from "./Header";
+import Home from "./Home";
+
+function App() {
+  return (
+    <div className="">
+      <Header />
+      <Outlet />
+    </div>
+  );
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        index: true, 
+        element: <Home />,
+      },
+      {
+        path: "about",  
+        element: <div>About</div>,  
+      }
+    ],
+  },
+]);
+
+export default router;
