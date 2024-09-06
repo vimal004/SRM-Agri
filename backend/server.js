@@ -17,18 +17,37 @@ app.get("/", (req, res) => {
   res.json("Server Running!");
 });
 
-const userSchema = new mongoose.Schema({
-  name: String, 
+const AdminSchema = new mongoose.Schema({
+  name: String,
   email: {
     type: String,
-    unique: true, 
+    unique: true,
   },
   password: String,
 });
 
-const User = mongoose.model("User", userSchema);
+const UserSchema = new mongoose.Schema({
+  name: String,
+  email: {
+    type: String,
+    unique: true,
+  },
+  password: String,
+});
 
-app.post("/register", async (req, res) => {
+const Admin = mongoose.model("Admin", AdminSchema);
+const User = mongoose.model("User", UserSchema);
+
+app.post("/adminregister", async (req, res) => {
+  try {
+    const result = await Admin.create(req.body);
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.post("/userregister", async (req, res) => {
   try {
     const result = await User.create(req.body);
     res.send(result);
@@ -37,7 +56,16 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login", async(req, res) => {
+app.post("/adminlogin", async (req, res) => {
+  try {
+    const result = await Admin.findOne({ email: req.body.email });
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.post("/userlogin", async (req, res) => {
   try {
     const result = await User.findOne({ email: req.body.email });
     res.send(result);
