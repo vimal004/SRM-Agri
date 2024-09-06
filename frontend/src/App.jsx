@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Header from "./Header";
-import Home from "./Home";
+import Home from "./Pages/Home";
 
 function App() {
   return (
