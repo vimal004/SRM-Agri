@@ -2,6 +2,10 @@ import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Header from "./Header";
 import Home from "./Pages/Home";
+import AdminHome from "./Pages/Admin/AdminHome";
+import RequestHome from "./Pages/Requester/RequestHome";
+import RequestResources from "./Pages/Requester/RequestResources";
+import ApproveResources from "./Pages/Admin/ApproveResources";
 
 function App() {
   return (
@@ -23,11 +27,19 @@ const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <div>Admin</div>,
+        element: <AdminHome />,
       },
       {
         path: "requester",
-        element: <div>Requester</div>,
+        element: <RequestHome />,
+      },
+      {
+        path: "approveresources",
+        element: <ApproveResources />,
+      },
+      {
+        path: "requestresources", 
+        element: <RequestResources />,
       },
     ],
   },
