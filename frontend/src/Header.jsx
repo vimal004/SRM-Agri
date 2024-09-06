@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
         className="w-8 h-8 mr-3 sm:w-16 sm:h-16 rounded-full shadow-md"
       />
       <h1 className="text-lg sm:text-xl font-extrabold tracking-wide text-gray-800">
-        SRM Agri Project
+        <Link to="/">SRM Agri Project</Link>
       </h1>
     </header>
   );
