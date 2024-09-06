@@ -36,15 +36,28 @@ const Home = () => {
   };
 
   const handleLogin = async () => {
+    console.log("Logging in...");
+    console.log("Email:", email);
+    console.log("Password length:", password.length); // For debugging
+
     try {
-      const response = await axios.post("https://srm-agri.onrender.com/login", {
-        email,
-        password,
+      // Determine the endpoint based on login type
+      const url =
+        loginType === "approver"
+          ? "https://srm-agri.onrender.com/adminlogin"
+          : "https://srm-agri.onrender.com/userlogin";
+
+      // Send both email and password in the request body
+      const response = await axios.post(url, {
+        email: email,
+        password: password, // Add password here
       });
 
       if (response.data.success) {
         setSnackbarMessage("Login successful!");
         setSnackbarVariant("success");
+
+        // Redirect based on login type
         if (loginType === "approver") {
           navigate("/admin");
         } else {
@@ -62,6 +75,7 @@ const Home = () => {
       handleClose();
     }
   };
+
 
   return (
     <Box
@@ -104,7 +118,10 @@ const Home = () => {
               padding: "12px 24px",
               fontSize: "16px",
             }}
-            onClick={() => handleClickOpen("approver")}
+            onClick={() => {
+              handleClickOpen("approver");
+              console.log("Approver Login");
+            }}
           >
             Approver Login
           </Button>
@@ -121,7 +138,10 @@ const Home = () => {
               padding: "12px 24px",
               fontSize: "16px",
             }}
-            onClick={() => handleClickOpen("requester")}
+            onClick={() => {
+              handleClickOpen("requester");
+              console.log("Requester Login");
+            }}
           >
             Requester Login
           </Button>

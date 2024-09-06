@@ -56,23 +56,34 @@ app.post("/userregister", async (req, res) => {
   }
 });
 
+// Admin login route
 app.post("/adminlogin", async (req, res) => {
   try {
-    const result = await Admin.findOne({ email: req.body.email });
-    res.send(result);
+    const admin = await Admin.findOne({ email: req.body.email });
+    if (admin && admin.password === req.body.password) {
+      res.send({ success: true, message: "Login successful", admin });
+    } else {
+      res.send({ success: false, message: "Invalid email or password" });
+    }
   } catch (error) {
-    res.send(error);
+    res.status(500).send({ success: false, message: "Server error" });
   }
 });
 
+// User login route
 app.post("/userlogin", async (req, res) => {
   try {
-    const result = await User.findOne({ email: req.body.email });
-    res.send(result);
+    const user = await User.findOne({ email: req.body.email });
+    if (user && user.password === req.body.password) {
+      res.send({ success: true, message: "Login successful", user });
+    } else {
+      res.send({ success: false, message: "Invalid email or password" });
+    }
   } catch (error) {
-    res.send(error);
+    res.status(500).send({ success: false, message: "Server error" });
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
