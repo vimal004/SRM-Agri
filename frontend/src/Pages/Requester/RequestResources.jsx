@@ -34,7 +34,7 @@ const RequestResources = () => {
         menCount: 0,
         womenCount: 0,
         count: 0,
-        date: selectedDate,
+        date: selectedDate, 
       },
     ]);
   };
@@ -87,7 +87,7 @@ const RequestResources = () => {
           onChange={(e) => {
             const newDate = e.target.value;
             setSelectedDate(newDate);
-            console.log("Selected Date: ", newDate); // Check if this prints correctly
+            console.log("Selected Date: ", selectedDate); // Check if this prints correctly
           }}
           style={{ padding: "5px", fontSize: "16px", borderRadius: "4px" }}
         />

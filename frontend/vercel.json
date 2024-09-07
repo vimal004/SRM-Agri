@@ -11,6 +11,14 @@
     {
       "src": "/requester",
       "dest": "/"
+    },
+    {
+      "src": "/requestresources",
+      "dest": "/"
+    },
+    {
+      "src": "/approveresources",
+      "dest": "/"
     }
   ]
 }
