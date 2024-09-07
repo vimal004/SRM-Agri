@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 app.use(express.json());
 app.use(cors());
 app.use("/auth", require("./authrouter"));
+app.use("/resource", require("./resourcerouter"));
 
 mongoose
   .connect(
