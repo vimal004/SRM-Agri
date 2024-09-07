@@ -44,8 +44,8 @@ const Home = () => {
       // Determine the endpoint based on login type
       const url =
         loginType === "approver"
-          ? "https://srm-agri.onrender.com/adminlogin"
-          : "https://srm-agri.onrender.com/userlogin";
+          ? "https://srm-agri.onrender.com/auth/adminlogin"
+          : "https://srm-agri.onrender.com/auth/userlogin";
 
       // Send both email and password in the request body
       const response = await axios.post(url, {
