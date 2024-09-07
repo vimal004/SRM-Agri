@@ -12,11 +12,16 @@ import {
   TextField,
   Typography,
   Box,
+  Snackbar,
+  Alert, // Import Alert for the filled variant
 } from "@mui/material";
 
 const RequestResources = () => {
   const [records, setRecords] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleAddRow = () => {
     setRecords([
@@ -53,10 +58,20 @@ const RequestResources = () => {
       .post("https://srm-agri.onrender.com/resource/add", records)
       .then((response) => {
         console.log(response.data);
+        setSnackbarMessage("Request sent successfully!");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true); // Open Snackbar on success
       })
       .catch((error) => {
         console.error(error);
+        setSnackbarMessage("Failed to send request. Try again.");
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true); // Open Snackbar on error
       });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -66,11 +81,14 @@ const RequestResources = () => {
           Request Resources
         </Typography>
 
-        {/* Simple HTML Date Input */}
         <input
           type="date"
           value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          onChange={(e) => {
+            const newDate = e.target.value;
+            setSelectedDate(newDate);
+            console.log("Selected Date: ", newDate); // Check if this prints correctly
+          }}
           style={{ padding: "5px", fontSize: "16px", borderRadius: "4px" }}
         />
       </Box>
@@ -216,6 +234,21 @@ const RequestResources = () => {
           Send Request
         </Button>
       </Box>
+
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          variant="filled"
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

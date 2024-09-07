@@ -1,10 +1,8 @@
 import React from "react";
 import { Button, Box, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const RequestHome = () => {
-  const navigate = useNavigate();
-
   return (
     <Box
       display="flex"
@@ -14,6 +12,8 @@ const RequestHome = () => {
       height="100vh"
       bgcolor="#f5f5f5"
       p={4}
+      textAlign="center" // Ensures all text and buttons are centered
+      sx={{ marginTop: "-15vh" }}
     >
       {/* Heading */}
       <Typography
@@ -22,13 +22,12 @@ const RequestHome = () => {
         color="black"
         fontWeight="bold"
         mb={4}
-        textAlign="center"
       >
         Request Home
       </Typography>
 
       {/* Buttons */}
-      <Box display="flex" flexDirection="column" gap={2}>
+      <Box display="flex" flexDirection="column" gap={2} alignItems="center">
         {/* Request Resources Button */}
         <Link to="/requestresources" style={{ textDecoration: "none" }}>
           <Button
