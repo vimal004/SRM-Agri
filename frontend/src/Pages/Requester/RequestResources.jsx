@@ -13,12 +13,12 @@ import {
   Typography,
   Box,
   Snackbar,
-  Alert, // Import Alert for the filled variant
+  Alert,
 } from "@mui/material";
 
 const RequestResources = () => {
   const [records, setRecords] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(""); // Initialize with an empty string
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -34,7 +34,7 @@ const RequestResources = () => {
         menCount: 0,
         womenCount: 0,
         count: 0,
-        date: selectedDate, 
+        date: selectedDate, // Use the selected date for each record
       },
     ]);
   };
@@ -80,16 +80,18 @@ const RequestResources = () => {
         <Typography variant="h4" gutterBottom fontWeight="bold">
           Request Resources
         </Typography>
+      </Box>
 
-        <input
+      {/* Date Picker */}
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h6">Select Date</Typography>
+        <TextField
           type="date"
           value={selectedDate}
-          onChange={(e) => {
-            const newDate = e.target.value;
-            setSelectedDate(newDate);
-            console.log("Selected Date: ", selectedDate); // Check if this prints correctly
-          }}
-          style={{ padding: "5px", fontSize: "16px", borderRadius: "4px" }}
+          onChange={(e) => setSelectedDate(e.target.value)} // Update selected date
+          variant="outlined"
+          size="small"
+          sx={{ width: "200px", mt: 1 }}
         />
       </Box>
 
