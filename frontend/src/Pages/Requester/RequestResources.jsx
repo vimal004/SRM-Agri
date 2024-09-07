@@ -50,7 +50,7 @@ const RequestResources = () => {
 
   const handleSendRequest = () => {
     axios
-      .post("https://srm-agri.onrender.com/requested", records)
+      .post("https://srm-agri.onrender.com/resource/add", records)
       .then((response) => {
         console.log(response.data);
       })
